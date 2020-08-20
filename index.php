@@ -10,6 +10,7 @@ $telegram = new Api($token);
 $result = $telegram->getWebhookUpdates();
 
 $intents = [];
+$intents[] = new \App\intents\StartIntent($telegram, $result);
 $intents[] = new \App\intents\UnknownIntent($telegram, $result);
 /** @var \App\intents\BaseIntent $intent */
 foreach ($intents as $intent) {

@@ -15,7 +15,7 @@ class UnknownIntent extends BaseIntent
     {
         $this->telegram->sendMessage([
             'chat_id' => $this->message['message']["chat"]["id"],
-            'text' => 'hello'
+            'text' => 'hello 2'
         ]);
     }
 

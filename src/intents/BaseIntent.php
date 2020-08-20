@@ -10,7 +10,7 @@ abstract class BaseIntent
     /** @var Api */
     protected $telegram;
 
-    public function __construct($message, $telegram)
+    public function __construct($telegram, $message)
     {
         $this->message = $message;
         $this->telegram = $telegram;

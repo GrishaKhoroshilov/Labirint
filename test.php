@@ -2,19 +2,12 @@
 
 include('vendor/autoload.php');
 
-try {
-    \App\utils\App::app()->db->select('select * from users');
-} catch (Throwable $exception) {
-    var_dump($exception->getMessage());
-}
+$maze = new \App\model\game\Maze();
 
-/*
+$maze->load($_GET['id']);
 
-$generator = new \App\model\game\MazeGenerator();
-$grid = $generator->createMaze(1, 1, 14, 50, null);
-//var_dump($grid);
 
-foreach ($grid as $y => $row) {
+foreach ($maze->grid as $y => $row) {
     echo '|';
     foreach ($row as $x => $cell) {
         if ($cell['bottom_wall']) {
@@ -32,4 +25,3 @@ foreach ($grid as $y => $row) {
     }
     echo PHP_EOL;
 }
-*/

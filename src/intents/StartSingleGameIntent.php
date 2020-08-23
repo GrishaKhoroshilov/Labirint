@@ -5,10 +5,12 @@ namespace App\intents;
 
 
 use App\enums\GameTypeEnum;
-use Telegram\Bot\Api;
+use App\model\game\SingleGame;
+use App\model\game\User;
 
-class StartIntent extends BaseIntent
+class StartSingleGameIntent extends BaseIntent
 {
+
 
     /**
      * Метод дает ответ пользователю на его сообщение(намерение)
@@ -16,6 +18,13 @@ class StartIntent extends BaseIntent
      */
     public function execute()
     {
+        $user = new User($this->message["message"]["chat"]["id"]);
+        $game = new SingleGame($user);
+        $res = $game->start('normal');
+        if (is_string($res)) {
+            //
+        }
+        $text = $game->getGameField();
         $keyboard = [
             [GameTypeEnum::SINGLE_GAME], ["поле2"], ["поле 3"]
         ];
@@ -27,13 +36,9 @@ class StartIntent extends BaseIntent
         $keyboardMarkup = json_encode($keyboardMarkup);
         $this->telegram->sendMessage([
             'chat_id' => $this->message['message']["chat"]["id"],
-            'text' => 'Добро пожаловать в Лабиринт!
-- Здесь вы можете поиграть в лабиринт головоломку со своим другом.
-- Один из вас будет направлять другого 
-- Попробуй найти выход',
+            'text' => $text,
             'reply_markup' => $keyboardMarkup
         ]);
-
     }
 
     /**
@@ -42,6 +47,6 @@ class StartIntent extends BaseIntent
      */
     public function isApplied()
     {
-        return $this->message["message"]["text"] == '/start';
+        return $this->message["message"]["text"] == GameTypeEnum::SINGLE_GAME;
     }
 }

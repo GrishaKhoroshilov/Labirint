@@ -40,8 +40,9 @@ class StartSingleGameIntent extends BaseIntent
         $keyboardMarkup = json_encode($keyboardMarkup);
         $this->telegram->sendMessage([
             'chat_id' => $this->message['message']["chat"]["id"],
-            'text' => $text,
-            'reply_markup' => $keyboardMarkup
+            'text' => '<pre>' . $text . '</pre>',
+            'reply_markup' => $keyboardMarkup,
+            'parse_mode' => 'HTML'
         ]);
     }
 

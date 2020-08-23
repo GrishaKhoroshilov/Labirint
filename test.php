@@ -4,7 +4,7 @@ include('vendor/autoload.php');
 
 try {
     \src\utils\App::app()->db->select('select * from users');
-} catch (Exception $exception) {
+} catch (Throwable $exception) {
     var_dump($exception->getMessage());
 }
 

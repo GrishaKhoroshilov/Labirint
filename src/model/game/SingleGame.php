@@ -80,14 +80,16 @@ class SingleGame implements IGame
                 $cell = $this->maze->grid[$y][$x];
                 if ($cell['bottom_wall']) {
                     $result .= '_';
+                } elseif ($x == $game['x'] && $y == $game['y']) {
+                    $result .= '*';
                 } else {
-                    $result .= '.';
+                    $result .= ' ';
                 }
 
                 if ($cell['right_wall']) {
                     $result .= '|';
                 } else {
-                    $result .= '.';
+                    $result .= ' ';
                 }
             }
             $result .= PHP_EOL;

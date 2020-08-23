@@ -1,10 +1,8 @@
 <?php
 
 
-namespace src\utils;
+namespace App\utils;
 
-
-// use src\model\repository\UserRepository;
 
 class App
 {

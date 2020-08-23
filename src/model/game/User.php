@@ -4,7 +4,7 @@
 namespace App\model\game;
 
 
-use src\utils\App;
+use App\utils\App;
 
 class User
 {

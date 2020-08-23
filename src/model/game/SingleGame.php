@@ -5,7 +5,7 @@ namespace App\model\game;
 
 
 use App\enums\DifficultyEnum;
-use src\utils\App;
+use App\utils\App;
 
 class SingleGame implements IGame
 {

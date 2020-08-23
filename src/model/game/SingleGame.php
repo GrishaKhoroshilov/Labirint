@@ -81,13 +81,13 @@ class SingleGame implements IGame
                 if ($cell['bottom_wall']) {
                     $result .= '_';
                 } else {
-                    $result .= ' ';
+                    $result .= '.';
                 }
 
                 if ($cell['right_wall']) {
                     $result .= '|';
                 } else {
-                    $result .= ' ';
+                    $result .= '.';
                 }
             }
             $result .= PHP_EOL;

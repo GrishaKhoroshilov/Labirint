@@ -113,4 +113,11 @@ class SingleGame implements IGame
         }
 
     }
+
+    public function quit()
+    {
+        App::app()->db->update('UPDATE game SET status = \'deleted\' WHERE id = :id', [
+            ':id' => $this->id
+        ]);
+    }
 }

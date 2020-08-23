@@ -4,6 +4,7 @@
 namespace App\intents;
 
 
+use App\enums\GameMenuEnum;
 use App\enums\GameTypeEnum;
 use Telegram\Bot\Api;
 
@@ -17,7 +18,7 @@ class StartIntent extends BaseIntent
     public function execute()
     {
         $keyboard = [
-            [GameTypeEnum::SINGLE_GAME], ["поле2"], ["поле 3"]
+            [GameTypeEnum::SINGLE_GAME], ["поле2"], [GameMenuEnum::EXIT_GAME]
         ];
         $keyboardMarkup = [
             'keyboard' => $keyboard,

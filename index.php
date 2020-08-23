@@ -12,6 +12,7 @@ $result = $telegram->getWebhookUpdates();
 $intents = [];
 $intents[] = new \App\intents\StartIntent($telegram, $result);
 $intents[] = new \App\intents\StartSingleGameIntent($telegram, $result);
+$intents[] = new \App\intents\ExitGameIntent($telegram, $result);
 $intents[] = new \App\intents\UnknownIntent($telegram, $result);
 
 /** @var \App\intents\BaseIntent $intent */

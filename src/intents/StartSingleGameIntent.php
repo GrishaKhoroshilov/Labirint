@@ -22,7 +22,11 @@ class StartSingleGameIntent extends BaseIntent
         $game = new SingleGame($user);
         $res = $game->start('normal');
         if (is_string($res)) {
-            //
+            $this->telegram->sendMessage([
+                'chat_id' => $this->message['message']["chat"]["id"],
+                'text' => $res
+            ]);
+            return;
         }
         $text = $game->getGameField();
         $keyboard = [

@@ -73,13 +73,22 @@ class SingleGame implements IGame
 
         $result = '';
         for ($y = $minY; $y <= $maxY; $y++ ) {
-            // $result .= '|';
+            if ($minX == 1) {
+                $result .= '|';
+            }
+            if ($minY == 1) {
+                for ($x = $minX; $x <= $maxX; $x++) {
+                    $result .= '__';
+                }
+            }
             for ($x = $minX; $x <= $maxX; $x++) {
                 $cell = $this->maze->grid[$y][$x];
-                if ($cell['bottom_wall']) {
+                if ($cell['bottom_wall'] && $x == $game['x'] && $y == $game['y']) {
+                    $result .= '<u>*</u>';
+                } elseif ($cell['bottom_wall']) {
                     $result .= '_';
                 } elseif ($x == $game['x'] && $y == $game['y']) {
-                    $result .= '#';
+                    $result .= '*';
                 } else {
                     $result .= ' ';
                 }

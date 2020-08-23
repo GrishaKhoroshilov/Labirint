@@ -2,7 +2,11 @@
 
 include('vendor/autoload.php');
 
-\src\utils\App::app()->db->select('select * from users');
+try {
+    \src\utils\App::app()->db->select('select * from users');
+} catch (Exception $exception) {
+    var_dump($exception->getMessage());
+}
 
 /*
 

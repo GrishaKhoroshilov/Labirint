@@ -23,5 +23,5 @@ foreach ($maze->grid as $y => $row) {
         }
 
     }
-    echo PHP_EOL;
+    echo '<br>';
 }

@@ -79,7 +79,7 @@ class SingleGame implements IGame
                 if ($cell['bottom_wall']) {
                     $result .= '_';
                 } elseif ($x == $game['x'] && $y == $game['y']) {
-                    $result .= '*';
+                    $result .= '#';
                 } else {
                     $result .= ' ';
                 }

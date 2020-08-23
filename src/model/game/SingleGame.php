@@ -11,7 +11,6 @@ class SingleGame implements IGame
 {
     /** @var Maze */
     protected $maze;
-    protected $id;
     /** @var User */
     protected $user;
 
@@ -62,7 +61,6 @@ class SingleGame implements IGame
 
     public function getGameField()
     {
-
         $viewSize = 3;
         $game = App::app()->db->select('SELECT * FROM game WHERE user_id = :user_id AND status = \'active\'', [
             ':user_id' => $this->user->id
@@ -116,8 +114,12 @@ class SingleGame implements IGame
 
     public function quit()
     {
+        $game = App::app()->db->select('SELECT * FROM game WHERE user_id = :user_id AND status = \'active\'', [
+            ':user_id' => $this->user->id
+        ]);
+
         App::app()->db->update('UPDATE game SET status = \'deleted\' WHERE id = :id', [
-            ':id' => $this->id
+            ':id' => $game['id']
         ]);
     }
 }

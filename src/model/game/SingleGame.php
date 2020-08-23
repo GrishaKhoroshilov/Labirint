@@ -30,7 +30,7 @@ class SingleGame implements IGame
         }
         $size = $this->geSizeByDifficulty($difficulty);
         $this->maze = new Maze();
-        $mazeId = $this->maze->generate();
+        $mazeId = $this->maze->generate($size);
 
         App::app()->db->insert('game', [
             'maze_id' => $mazeId,

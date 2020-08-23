@@ -17,10 +17,10 @@ class Maze
     {
     }
 
-    public function generate()
+    public function generate($size)
     {
         $generator = new \App\model\game\MazeGenerator();
-        $this->grid = $generator->createMaze(1, 1, 14, 50, null);
+        $this->grid = $generator->createMaze(1, 1, $size['width'], $size['height'], null);
         return $this->save();
     }
 

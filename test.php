@@ -2,12 +2,13 @@
 
 include('vendor/autoload.php');
 
-$maze = new \App\model\game\Maze();
 
-$maze->load($_GET['id']);
+$generator = new \App\model\game\MazeGenerator();
+$grid = $generator->createMaze(1, 1, 10, 10, null);
+//var_dump($grid);
 
-
-foreach ($maze->grid as $y => $row) {
+echo '<pre>';
+foreach ($grid as $y => $row) {
     echo '|';
     foreach ($row as $x => $cell) {
         if ($cell['bottom_wall']) {
@@ -25,3 +26,4 @@ foreach ($maze->grid as $y => $row) {
     }
     echo '<br>';
 }
+echo '</pre>';

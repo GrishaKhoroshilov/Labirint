@@ -61,7 +61,7 @@ class SingleGame implements IGame
 
     public function getGameField()
     {
-        $viewSize = 3;
+        $viewSize = 5;
         $game = App::app()->db->select('SELECT * FROM game WHERE user_id = :user_id AND status = \'active\'', [
             ':user_id' => $this->user->id
         ]);

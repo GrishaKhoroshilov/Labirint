@@ -23,7 +23,7 @@ class StartIntent extends BaseIntent
         $keyboardMarkup = [
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
-            'one_time_keyboard' => false
+            'one_time_keyboard' => true
         ];
         $keyboardMarkup = json_encode($keyboardMarkup);
         $this->telegram->sendMessage([

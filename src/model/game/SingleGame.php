@@ -73,10 +73,13 @@ class SingleGame implements IGame
 
         $result = '';
 
-        if ($minY == 1) {
-            for ($x = $minX; $x <= $maxX; $x++) {
+        for ($x = $minX; $x <= $maxX; $x++) {
+            if ($minY == 1) {
                 $result .= '__';
+            } else {
+                $result .= '..';
             }
+
         }
         $result .= PHP_EOL;
 
@@ -103,7 +106,23 @@ class SingleGame implements IGame
                     $result .= ' ';
                 }
             }
+
+            if ($maxX == $size['width']) {
+                $result .= '|';
+            } else {
+                $result .= '.';
+            }
+
             $result .= PHP_EOL;
+        }
+
+        for ($x = $minX; $x <= $maxX; $x++) {
+            if ($maxY == $size['height']) {
+                $result .= '__';
+            } else {
+                $result .= '..';
+            }
+
         }
 
         return $result;

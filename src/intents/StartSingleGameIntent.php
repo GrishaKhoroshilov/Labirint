@@ -4,6 +4,7 @@
 namespace App\intents;
 
 
+use App\enums\GameEventEnum;
 use App\enums\GameTypeEnum;
 use App\model\game\SingleGame;
 use App\model\game\User;
@@ -30,7 +31,7 @@ class StartSingleGameIntent extends BaseIntent
         }
         $text = $game->getGameField();
         $keyboard = [
-            [GameTypeEnum::SINGLE_GAME], ["поле2"], ["поле 3"]
+            [GameTypeEnum::SINGLE_GAME], [GameEventEnum::MOVE_UP], [GameEventEnum::MOVE_DOWN], [GameEventEnum::MOVE_LEFT], [GameEventEnum::MOVE_RIGHT]
         ];
         $keyboardMarkup = [
             'keyboard' => $keyboard,

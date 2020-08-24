@@ -5,6 +5,7 @@ namespace App\model\game;
 
 
 use App\enums\DifficultyEnum;
+use App\enums\GameEventEnum;
 use App\utils\App;
 
 class SingleGame implements IGame
@@ -56,7 +57,71 @@ class SingleGame implements IGame
 
     public function move($direction)
     {
-        // TODO: Implement move() method.
+        $game = App::app()->db->select('SELECT * FROM game WHERE user_id = :user_id AND status = \'active\'', [
+            ':user_id' => $this->user->id
+        ]);
+        $maze = new Maze();
+        $maze->load($game['maze_id']);
+        $size = $this->geSizeByDifficulty($game['difficulty']);
+        $grid = $maze->grid;
+        // перемешение налево
+        if ($direction == GameEventEnum::MOVE_LEFT) {
+            $x = $game['x'] - 1;
+            $checkCell = $grid[$x][$game['y']];
+            if ($game['x'] - 1 < 1 || $checkCell == 'right_wall') {
+                return 'тупик';
+            }
+            $game['x'] = $game['x'] - 1;
+            App::app()->db->update('UPDATE game SET x = :x WHERE id = :id', [
+                ':id' => $game['id'],
+                ':x' => $game['x']
+            ]);
+            return 'успешное перемешение';
+        }
+        // перемещение направо
+        if ($direction == GameEventEnum::MOVE_RIGHT) {
+            $x = $game['x'];
+            $checkCell = $grid[$x][$game['y']];
+            if ($game['x'] + 1 > $size['width'] || $checkCell == 'right_wall') {
+                return 'тупик';
+            }
+            $game['x'] = $game['x'] + 1;
+            App::app()->db->update('UPDATE game SET x = :x WHERE id = :id', [
+                ':id' => $game['id'],
+                ':x' => $game['x']
+            ]);
+            return 'успешное перемешение';
+        }
+        // перемешение вверх
+        if ($direction == GameEventEnum::MOVE_UP) {
+            $x = $game['x'];
+            $y = $game['y'] - 1;
+            $checkCell = $grid[$x][$y];
+            if ($game['y'] - 1 < 1 || $checkCell == 'bottom_wall') {
+                return 'тупик';
+            }
+            $game['y'] = $game['y'] - 1;
+            App::app()->db->update('UPDATE game SET y = :y WHERE id = :id', [
+                ':id' => $game['id'],
+                ':y' => $game['y']
+            ]);
+            return 'успешное перемешение';
+        }
+        // перемешение вниз
+        if ($direction == GameEventEnum::MOVE_DOWN) {
+            $x = $game['x'];
+            $y = $game['y'];
+            $checkCell = $grid[$x][$y];
+            if ($game['y'] + 1 > $size['height'] || $checkCell == 'bottom_wall') {
+                return 'тупик';
+            }
+            $game['y'] = $game['y'] + 1;
+            App::app()->db->update('UPDATE game SET y = :y WHERE id = :id', [
+                ':id' => $game['id'],
+                ':y' => $game['y']
+            ]);
+            return 'успешное перемешение';
+        }
     }
 
     public function getGameField()
@@ -86,6 +151,8 @@ class SingleGame implements IGame
         for ($y = $minY; $y <= $maxY; $y++ ) {
             if ($minX == 1) {
                 $result .= '|';
+            } else {
+                $result .= '.';
             }
 
             for ($x = $minX; $x <= $maxX; $x++) {

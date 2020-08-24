@@ -6,6 +6,7 @@ namespace App\intents\gameIntents;
 
 use App\enums\GameEventEnum;
 use App\enums\GameTypeEnum;
+use App\model\game\Maze;
 use App\model\game\SingleGame;
 use App\model\game\User;
 
@@ -24,6 +25,11 @@ class MoveDown extends BaseGameIntent
         $this->telegram->sendMessage([
             'chat_id' => $this->message['message']["chat"]["id"],
             'text' => GameEventEnum::SUCCESS_MOVE
+        ]);
+        $text = $game->getGameField();
+        $this->telegram->sendMessage([
+            'chat_id' => $this->message['message']["chat"]["id"],
+            'text' => $text
         ]);
     }
 

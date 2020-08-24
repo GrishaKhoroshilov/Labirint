@@ -5,7 +5,6 @@ namespace App\intents\gameIntents;
 
 
 use App\enums\GameEventEnum;
-use App\enums\GameTypeEnum;
 use App\model\game\SingleGame;
 use App\model\game\User;
 
@@ -21,6 +20,10 @@ class MoveLeft extends BaseGameIntent
         $user = new User($this->message["message"]["chat"]["id"]);
         $game = new SingleGame($user);
         $game->move(GameEventEnum::MOVE_LEFT);
+        $this->telegram->sendMessage([
+            'chat_id' => $this->message['message']["chat"]["id"],
+            'text' => GameEventEnum::SUCCESS_MOVE
+        ]);
     }
 
     /**

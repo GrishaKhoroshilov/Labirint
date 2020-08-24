@@ -31,7 +31,9 @@ class StartSingleGameIntent extends BaseIntent
         }
         $text = $game->getGameField();
         $keyboard = [
-            [GameTypeEnum::SINGLE_GAME], [GameEventEnum::MOVE_UP], [GameEventEnum::MOVE_DOWN], [GameEventEnum::MOVE_LEFT], [GameEventEnum::MOVE_RIGHT]
+            [GameTypeEnum::SINGLE_GAME],
+            [GameEventEnum::MOVE_UP, GameEventEnum::MOVE_DOWN],
+            [GameEventEnum::MOVE_LEFT, GameEventEnum::MOVE_RIGHT]
         ];
         $keyboardMarkup = [
             'keyboard' => $keyboard,

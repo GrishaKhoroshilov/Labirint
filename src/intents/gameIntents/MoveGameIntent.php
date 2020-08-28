@@ -31,6 +31,11 @@ class MoveGameIntent extends BaseGameIntent
             'text' => '<pre>' . $text . '</pre>',
             'parse_mode' => 'HTML'
         ]);
+        if ($game->finish()) {
+            $this->sendMessage([
+                'text' => 'Вы нашли выход'
+            ]);
+        }
     }
 
     /**

@@ -52,7 +52,6 @@ class SingleGame implements IGame
 
     public function finish()
     {
-        // TODO: Implement finish() method.
     }
 
     public function move($direction)
@@ -64,6 +63,7 @@ class SingleGame implements IGame
         $this->maze->load($game['maze_id']);
         $size = $this->geSizeByDifficulty($game['difficulty']);
         $grid = $this->maze->grid;
+
         // перемешение налево
         if ($direction == GameEventEnum::MOVE_LEFT) {
             $x = $game['x'] - 1;
@@ -78,8 +78,8 @@ class SingleGame implements IGame
                 ':id' => $game['id'],
                 ':x' => $x
             ]);
-            return GameEventEnum::SUCCESS_MOVE;
         }
+
         // перемещение направо
         if ($direction == GameEventEnum::MOVE_RIGHT) {
             $x = $game['x'];
@@ -95,7 +95,6 @@ class SingleGame implements IGame
                 ':id' => $game['id'],
                 ':x' => $game['x']
             ]);
-            return GameEventEnum::SUCCESS_MOVE;
         }
         // перемешение вверх
         if ($direction == GameEventEnum::MOVE_UP) {
@@ -113,7 +112,6 @@ class SingleGame implements IGame
                 ':id' => $game['id'],
                 ':y' => $y
             ]);
-            return GameEventEnum::SUCCESS_MOVE;
         }
         // перемешение вниз
         if ($direction == GameEventEnum::MOVE_DOWN) {
@@ -131,8 +129,16 @@ class SingleGame implements IGame
                 ':id' => $game['id'],
                 ':y' => $game['y']
             ]);
-            return GameEventEnum::SUCCESS_MOVE;
         }
+
+        if ($this->isFinish($game)) {
+            App::app()->db->update('UPDATE game SET status = :status WHERE id = :id', [
+                ':id' => $game['id'],
+                ':status' => 'finished'
+            ]);
+            return GameEventEnum::FINISH_GAME;
+        }
+        return GameEventEnum::SUCCESS_MOVE;
     }
 
     public function getGameField()
@@ -174,6 +180,8 @@ class SingleGame implements IGame
                     $result .= '_';
                 } elseif ($x == $game['x'] && $y == $game['y']) {
                     $result .= '*';
+                } elseif ($x == 10 && $y == 10) {
+                    $result .= '+';
                 } else {
                     $result .= ' ';
                 }
@@ -231,5 +239,21 @@ class SingleGame implements IGame
         App::app()->db->update('UPDATE game SET status = \'deleted\' WHERE id = :id', [
             ':id' => $game['id']
         ]);
+    }
+
+    /**
+     * @param $game
+     * @return bool
+     */
+    protected function isFinish($game)
+    {
+        if ($game['x'] == 10 && $game['y'] == 10) {
+            App::app()->db->update('UPDATE game SET status = :status WHERE id = :id', [
+                ':id' => $game['id'],
+                ':status' => 'finished'
+            ]);
+            return true;
+        }
+        return false;
     }
 }

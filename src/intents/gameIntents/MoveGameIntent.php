@@ -26,16 +26,17 @@ class MoveGameIntent extends BaseGameIntent
             ]);
             return;
         }
+        if ($result == GameEventEnum::FINISH_GAME) {
+            $this->sendMessage([
+                'text' => 'Красавчик'
+            ]);
+            return;
+        }
         $text = $game->getGameField();
         $this->sendMessage([
             'text' => '<pre>' . $text . '</pre>',
             'parse_mode' => 'HTML'
         ]);
-        if ($game->finish()) {
-            $this->sendMessage([
-                'text' => 'Вы нашли выход'
-            ]);
-        }
     }
 
     /**

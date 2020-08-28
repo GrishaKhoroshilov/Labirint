@@ -24,10 +24,12 @@ class MoveGameIntent extends BaseGameIntent
             $this->sendMessage([
                 'text' => 'Тупик'
             ]);
+            return;
         }
         $text = $game->getGameField();
         $this->sendMessage([
-            'text' => $text
+            'text' => '<pre>' . $text . '</pre>',
+            'parse_mode' => 'HTML'
         ]);
     }
 

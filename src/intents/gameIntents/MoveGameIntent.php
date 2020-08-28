@@ -5,12 +5,10 @@ namespace App\intents\gameIntents;
 
 
 use App\enums\GameEventEnum;
-use App\enums\GameTypeEnum;
-use App\model\game\Maze;
 use App\model\game\SingleGame;
 use App\model\game\User;
 
-class MoveDown extends BaseGameIntent
+class MoveGameIntent extends BaseGameIntent
 {
 
     /**
@@ -21,14 +19,14 @@ class MoveDown extends BaseGameIntent
     {
         $user = new User($this->message["message"]["chat"]["id"]);
         $game = new SingleGame($user);
-        $game->move(GameEventEnum::MOVE_DOWN);
-        $this->telegram->sendMessage([
-            'chat_id' => $this->message['message']["chat"]["id"],
-            'text' => GameEventEnum::SUCCESS_MOVE
-        ]);
+        $result = $game->move($this->message["message"]["text"]);
+        if ($result == GameEventEnum::UN_SUCCESS_MOVE) {
+            $this->sendMessage([
+                'text' => 'Тупик'
+            ]);
+        }
         $text = $game->getGameField();
-        $this->telegram->sendMessage([
-            'chat_id' => $this->message['message']["chat"]["id"],
+        $this->sendMessage([
             'text' => $text
         ]);
     }
@@ -39,6 +37,11 @@ class MoveDown extends BaseGameIntent
      */
     public function isApplied()
     {
-        return $this->message["message"]["text"] == GameEventEnum::MOVE_DOWN;
+        return in_array($this->message["message"]["text"], [
+            GameEventEnum::MOVE_LEFT,
+            GameEventEnum::MOVE_RIGHT,
+            GameEventEnum::MOVE_UP,
+            GameEventEnum::MOVE_DOWN,
+        ]);
     }
 }

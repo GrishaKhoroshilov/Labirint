@@ -27,4 +27,11 @@ abstract class BaseIntent
      * @return bool
      */
     abstract public function isApplied();
+
+    protected function sendMessage($params = [])
+    {
+        $this->telegram->sendMessage(array_merge($params, [
+            'chat_id' => $this->message['message']["chat"]["id"],
+        ]));
+    }
 }

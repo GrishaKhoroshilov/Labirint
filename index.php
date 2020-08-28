@@ -13,10 +13,7 @@ $result = $telegram->getWebhookUpdates();
 $intents = [];
 $intents[] = new \App\intents\StartIntent($telegram, $result);
 $intents[] = new \App\intents\StartSingleGameIntent($telegram, $result);
-$intents[] = new \App\intents\gameIntents\MoveLeft($telegram, $result);
-$intents[] = new \App\intents\gameIntents\MoveRight($telegram, $result);
-$intents[] = new \App\intents\gameIntents\MoveUp($telegram, $result);
-$intents[] = new \App\intents\gameIntents\MoveDown($telegram, $result);
+$intents[] = new \App\intents\gameIntents\MoveGameIntent($telegram, $result);
 $intents[] = new \App\intents\ExitGameIntent($telegram, $result);
 $intents[] = new \App\intents\UnknownIntent($telegram, $result);
 

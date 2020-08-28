@@ -60,10 +60,10 @@ class SingleGame implements IGame
         $game = App::app()->db->select('SELECT * FROM game WHERE user_id = :user_id AND status = \'active\'', [
             ':user_id' => $this->user->id
         ]);
-        $maze = new Maze();
-        $maze->load($game['maze_id']);
+        $this->maze = new Maze();
+        $this->maze->load($game['maze_id']);
         $size = $this->geSizeByDifficulty($game['difficulty']);
-        $grid = $maze->grid;
+        $grid = $this->maze->grid;
         // перемешение налево
         if ($direction == GameEventEnum::MOVE_LEFT) {
             $x = $game['x'] - 1;
